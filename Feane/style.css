@@ -1,0 +1,183 @@
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color: var(--white);
+}
+
+.hero-section {
+  background-image: url(./assests/hero.jpeg);
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.main-section {
+  padding: 100px 0px 175px 0px;
+}
+h2,
+h5 {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+}
+h1 {
+  font-family: "Dancing Script", cursive;
+  font-size: 60px;
+}
+
+h4 {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  color: var(--dark);
+}
+p {
+  font-size: 15px;
+  opacity: 0.7;
+}
+.btn {
+  color: var(--white);
+  font-size: 13px;
+}
+.btn:hover {
+  color: var(--yellow);
+}
+button {
+  font-size: 15px;
+  color: var(--white);
+  border: none;
+  background: var(--yellow);
+}
+button:hover {
+  background: var(--yellow);
+  opacity: 0.8;
+}
+.nav-option {
+  display: flex;
+  align-items: center;
+}
+svg {
+  color: var(--white);
+}
+
+svg:hover {
+  color: var(--yellow);
+}
+.oderbutton {
+  height: 2rem;
+  width: 10rem;
+  padding: 0.4rem;
+  border-radius: 15px;
+}
+.box {
+  background: #222831;
+  border-radius: 0.4rem;
+  display: grid;
+  flex-wrap: wrap;
+  padding: 1rem;
+  margin: 1rem;
+  justify-content: center;
+
+  h5 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  h6 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: 2.5rem;
+  }
+}
+.img-box {
+  width: 170px;
+  border-radius: 50%;
+  border: 5px solid var(--yellow);
+  margin-right: 1rem;
+}
+
+.img-box img {
+  width: 160px;
+  border-radius: 50%;
+}
+.img-box img:hover {
+  transform: scale(1.1);
+}
+.cards {
+  display: grid;
+  flex-wrap: wrap;
+}
+.card {
+  width: 350px;
+  height: 400px;
+  margin: 1.5rem;
+}
+
+.card-img img:hover {
+  transition: 0.3s linear;
+  transform: scale(1.1);
+}
+.buggercut {
+  width: 420px;
+}
+
+input {
+  margin: 1rem 1rem;
+  padding: 0.8rem;
+  width: 80%;
+}
+
+img {
+  width: 100px;
+}
+
+@media screen and (max-width: 760px) {
+  .nav-svg {
+    display: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  .order {
+    display: none;
+  }
+  input {
+    width: 70%;
+  }
+}
