@@ -16,6 +16,8 @@ function ProductCard(props) {
       <p>{props.product.brand}</p>
 
       <p>₹ {props.product.price}</p>
+
+      <button className="bg-pink-500 flex justify-center items-center">Add to Cart</button>
     </div>
   );
 }

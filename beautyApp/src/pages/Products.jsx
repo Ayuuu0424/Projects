@@ -7,6 +7,7 @@ function Products() {
   const [isLoading, setIsLoading] = useState(false); // page abhi abhi open hoga toh loading nhi hogi na isliye false rkha
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [search, setSearch] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -51,10 +52,24 @@ function Products() {
 
           <p>Total Products: {products.length}</p>
 
+          <input
+            type="text"
+            placeholder="Search Products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border rounded px-4 py-2 w-80"
+          />
+
+          {/* <p>{search}</p>  ise hata dena h only for testing */}
+
           <div className="flex flex-wrap justify-center gap-5">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {products
+              .filter((product) =>
+                product.name.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
           </div>
         </div>
       )}
