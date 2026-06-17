@@ -1,4 +1,4 @@
-import heroImg from "../assets/slide3.jpg";
+import heroImg from "../assets/slide4.jpg";
 
 const Home = () => {
   return (
