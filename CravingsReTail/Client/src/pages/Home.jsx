@@ -206,7 +206,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-(--primary) via-(--secondary) to-(--background)">
+      <section className="py-20 bg-linear-to-b from-(--primary) via-(--secondary) to-(--background)">
         <div className="max-w-7xl mx-auto px-8">
           <h2 className="text-5xl font-bold text-white">
             Featured Restaurants
