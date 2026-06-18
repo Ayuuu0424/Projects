@@ -1,18 +1,150 @@
-import heroImg from "../assets/slide4.jpg";
+import heroImg from "../assets/slide3.jpg";
+
+import { FaSearch } from "react-icons/fa";
+
+import pizza from "../assets/pizza.avif";
+import burger from "../assets/burger.jpg";
+import noodles from "../assets/noodles.jpg";
+import dessert from "../assets/dessert.jpeg";
+import cholebhature from "../assets/cholebhature.jpeg";
+import dosa from "../assets/dosa.jpg";
+
+import rajdarbar from "../assets/RajDarbar.webp";
+import mangotree from "../assets/MangoTree.avif";
+import flyingsaucer from "../assets/FlyingSaucer.webp";
+import countryside from "../assets/Countryside.webp";
+import blinq from "../assets/BlinQ.webp";
+import theleaf from "../assets/TheLeaf.jpg";
 
 const Home = () => {
+  const categories = [
+    { name: "Pizza", image: pizza },
+    { name: "Burger", image: burger },
+    { name: "Noodles", image: noodles },
+    { name: "Dessert", image: dessert },
+    { name: "Cholebhature", image: cholebhature },
+    { name: "Dosa", image: dosa },
+  ];
+
+  const restaurants = [
+    {
+      name: "RajDarbar",
+      description:
+        "A unique dining experience for families and friends with a dhaba-style theme.",
+      cuisines: ["Indian", "Chinese", "Italian"],
+      rating: "4.8",
+      time: "25 min",
+      image: rajdarbar,
+    },
+    {
+      name: "MangoTree",
+      description:
+        "Enjoy the thrill of grill and barbecue at Under The Mango Tree restaurant.",
+      cuisines: ["Indian", "Chinese", "Italian"],
+      rating: "4.7",
+      time: "20 min",
+      image: mangotree,
+    },
+    {
+      name: "FlyingSaucer",
+      description:
+        "Experience rich flavors and authentic recipes crafted with fresh ingredients and traditional spices.",
+      cuisines: ["Indian", "Chinese", "Italian"],
+      rating: "4.9",
+      time: "30 min",
+      image: flyingsaucer,
+    },
+    {
+      name: "Countryside",
+      description:
+        "A hidden gem offering lush green meadows and peaceful dining.",
+      cuisines: ["Indian", "Chinese", "Italian"],
+      rating: "4.6",
+      time: "22 min",
+      image: countryside,
+    },
+    {
+      name: "BlinQ",
+      description:
+        "A modern dining destination serving delicious fast food, burgers, pizzas, and refreshing beverages.",
+      cuisines: ["Indian", "Chinese", "Italian"],
+      rating: "4.8",
+      time: "28 min",
+      image: blinq,
+    },
+    {
+      name: "TheLeaf",
+      description:
+        "Indulge in a luxurious dining experience featuring premium dishes, elegant ambience, and exceptional service.",
+      cuisines: ["Indian", "Chinese", "Italian"],
+      rating: "4.7",
+      time: "18 min",
+      image: theleaf,
+    },
+  ];
+
+  const testimonials = [
+    {
+      name: "Arun J.",
+      initials: "AJ",
+      title: "Amazing Service!",
+      review:
+        "The food arrived hot and fresh. The delivery was incredibly fast. Highly impressed with Cravings' service!",
+    },
+    {
+      name: "Sneha P.",
+      initials: "SP",
+      title: "Best App Ever!",
+      review:
+        "Easy to use interface, wide variety of restaurants, and quick delivery. I order from Cravings every week!",
+    },
+    {
+      name: "Raj Kumar",
+      initials: "RK",
+      title: "Excellent Choices",
+      review:
+        "Love the variety of restaurants available. Found my new favorite spot through Cravings. Definitely worth it!",
+    },
+  ];
+
+  const stats = [
+    {
+      number: "2.5M+",
+      title: "Successful Deliveries",
+      description: "Orders delivered with care and precision",
+      color: "text-(--primary)",
+    },
+    {
+      number: "500K+",
+      title: "Happy Customers",
+      description: "Satisfied users enjoying delicious food",
+      color: "text-pink-500",
+    },
+    {
+      number: "5K+",
+      title: "Partner Restaurants",
+      description: "Restaurants serving amazing cuisine",
+      color: "text-(--primary)",
+    },
+    {
+      number: "1K+",
+      title: "Active Delivery Partners",
+      description: "Riders ensuring quick and safe delivery",
+      color: "text-pink-500",
+    },
+  ];
   return (
     <div>
       <section
-        className="h-[90vh] bg-cover bg-center relative"
+        className="h-[75vh] bg-cover bg-center relative"
         style={{
           backgroundImage: `url(${heroImg})`,
         }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
-          <h1 className="text-white text-5xl md:text-7xl font-bold text-center">
+        <div className="relative z-20 h-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-white text-4xl md:text-5xl font-bold text-center">
             Your Favorite Food,
             <br />
             Delivered Fast
@@ -23,7 +155,7 @@ const Home = () => {
             doorstep
           </p>
 
-          <div className="flex gap-4 mt-8">
+          <div className="flex gap-4 mt-8 justify-center">
             <button className="bg-(--primary) text-white px-8 py-3 rounded-xl font-semibold hover:bg-(--secondary) transition">
               Sign Up
             </button>
@@ -33,12 +165,196 @@ const Home = () => {
             </button>
           </div>
 
-          <div className="mt-10 w-full max-w-4xl">
+          <div className="mt-10 w-full max-w-3xl relative">
+            <FaSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+
             <input
               type="text"
               placeholder="Search restaurants or dishes..."
-              className="w-full p-4 rounded-xl bg-white outline-none shadow-lg"
+              className="w-full pl-14 pr-4 py-3 rounded-xl bg-[#f8f2ec] outline-none shadow-lg"
             />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-(--background)">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="text-4xl font-bold text-center text-(--text)">
+            Explore Categories
+          </h2>
+
+          <p className="text-center text-gray-600 mt-3">
+            Find your favourite food in just a few clicks
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-12">
+            {categories.map((category) => (
+              <div
+                key={category.name}
+                className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center hover:scale-105 transition duration-300 cursor-pointer"
+              >
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-24 h-24 rounded-full object-cover"
+                />
+
+                <h3 className="mt-4 font-semibold text-lg">{category.name}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gradient-to-b from-(--primary) via-(--secondary) to-(--background)">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="text-5xl font-bold text-white">
+            Featured Restaurants
+          </h2>
+
+          <p className="text-white/90 mt-2">
+            {restaurants.length} restaurants available
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+            {restaurants.map((restaurant, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+              >
+                <div className="relative">
+                  <img
+                    src={restaurant.image}
+                    alt={restaurant.name}
+                    className="w-full h-52 object-cover"
+                  />
+
+                  <div className="absolute top-3 right-3 bg-(--primary) text-white px-4 py-1 rounded-full font-semibold">
+                    ⭐ {restaurant.rating}
+                  </div>
+                </div>
+
+                <div className="p-5">
+                  <h3 className="text-2xl font-bold text-(--text)">
+                    {restaurant.name}
+                  </h3>
+
+                  <p className="text-gray-600 leading-7 mt-3 line-clamp-3">
+                    {restaurant.description}
+                  </p>
+
+                  <div className="flex gap-2 flex-wrap mt-4">
+                    {restaurant.cuisines.map((item) => (
+                      <span
+                        key={item}
+                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-md text-sm"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+
+                  <button className="w-full mt-6 bg-(--primary) text-white py-3 rounded-xl font-semibold hover:bg-(--secondary) transition">
+                    Explore Menu
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-[#f8f5ef]">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="text-4xl font-bold text-center">
+            Cravings by the Numbers
+          </h2>
+
+          <p className="text-center text-gray-600 mt-2 mb-12">
+            See why millions trust us for their daily food delivery needs
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            {stats.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-sm text-center p-6 max-w-[260px] mx-auto"
+              >
+                <h3
+                  className={`text-5xl font-bold mb-3 ${
+                    index === 0 || index === 2
+                      ? "text-orange-700"
+                      : "text-pink-600"
+                  }`}
+                >
+                  {item.number}
+                </h3>
+
+                <h4 className="text-xl font-semibold">{item.title}</h4>
+
+                <p className="text-gray-500 mt-3">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="text-4xl font-bold text-center">
+            What Our Customers Say
+          </h2>
+
+          <p className="text-center text-gray-600 mt-3">
+            Real feedback from real food lovers
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-2 mt-12 justify-items-center">
+            {testimonials.map((item, index) => (
+              <div
+                key={index}
+                className="bg-[#f8f2ec] rounded-xl shadow-md p-5 h-64 w-full max-w-[350px] hover:shadow-lg transition"
+              >
+                <div className="flex text-yellow-500 text-lg">⭐⭐⭐⭐⭐</div>
+
+                <h3 className="font-bold text-lg mt-2">{item.title}</h3>
+
+                <p className="text-gray-700 mt-2 leading-5 text-sm line-clamp-3">
+                  "{item.review}"
+                </p>
+
+                <div className="flex items-center mt-4">
+                  <div className="w-10 h-10 rounded-full bg-(--primary) text-white flex items-center justify-center font-bold">
+                    {item.initials}
+                  </div>
+
+                  <div className="ml-3">
+                    <h4 className="font-semibold">{item.name}</h4>
+
+                    <p className="text-gray-500 text-sm">Verified Buyer</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-(--primary)">
+        <div className="max-w-4xl mx-auto text-center px-8">
+          <h2 className="text-4xl font-bold text-white">
+            Become a Restaurant Partner
+          </h2>
+
+          <p className="text-xl text-white/90 mt-3">
+            Grow your business with Cravings and reach thousands of hungry
+            customers every day.
+          </p>
+
+          <div className="flex justify-center gap-4 mt-6">
+            <button className="bg-white text-(--primary) px-8 py-4 rounded-xl font-semibold hover:scale-105 transition">
+              Partner With Us
+            </button>
           </div>
         </div>
       </section>

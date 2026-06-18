@@ -14,7 +14,7 @@ import OrderNow from "./pages/OrderNow";
 import Partner from "./pages/Partner";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Register from "./pages/Register";
-import RestaurantCard from "./pages/RestaurantCard";
+import RestaurantDashboard from "./pages/RestaurantDashboard";
 import Sitemap from "./pages/Sitemap";
 import TermsOfService from "./pages/TermsOfService";
 
@@ -29,12 +29,18 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contactus" element={<Contactus />} />
           <Route path="/feedback" element={<Feedback />} />
-          <Route path="/helpcenter" element={<Helpcenter />} />
+          <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ordernow" element={<OrderNow />} />
           <Route path="/partner" element={<Partner />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/restaurantdashboard"
+            element={<RestaurantDashboard />}
+          />
+          <Route path="/sitemap" element={<Sitemap />} />
+          <Route path="/termsofservice" element={<TermsOfService />} />
         </Routes>
 
         <Footer />
