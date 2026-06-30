@@ -17,11 +17,13 @@ import Register from "./pages/Register";
 import RestaurantDashboard from "./pages/RestaurantDashboard";
 import Sitemap from "./pages/Sitemap";
 import TermsOfService from "./pages/TermsOfService";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
+        <Toaster />
         <Navbar />
 
         <Routes>

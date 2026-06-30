@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginBg from "../assets/pinkLoginBG.jpg";
 import api from "../config/api.config.js";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -46,12 +47,9 @@ const Register = () => {
 
     try {
       const res = await api.post("/auth/register", payload);
-      alert(res.data.message);
+      toast.success(res.data.message);
     } catch (error) {
-      console.log(error.response?.data?.message || error.message);
-      // console.log(error);
-      // console.log(error.response);
-      // console.log(error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
@@ -161,7 +159,8 @@ const Register = () => {
           </label>
 
           <button
-            onClick={() => navigate("/register")}
+           onClick={() => toast.success("Registration Successful")}
+            type="submit"
             className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition duration-300"
           >
             Register

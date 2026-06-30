@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import loginBg from "../assets/pinkLoginBG.jpg";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -23,8 +24,16 @@ const Login = () => {
       email: loginData.email.toLowerCase(),
       password: loginData.password,
     };
-
     console.log(payload);
+
+    try {
+      const res = await api.post("/auth/login", payload);
+      toast.success(res.data.message);
+      console.log(res.data.data.photo);
+    } catch (error) {
+      error.response.status + "|" + error.response?.data?.message ||
+        error.message;
+    }
   };
 
   return (
