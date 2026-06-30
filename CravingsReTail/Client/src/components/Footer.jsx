@@ -25,9 +25,8 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3 text-gray-300">
               <Link to="/">Home</Link>
-              <Link to="/products">Products</Link>
-              <Link to="/contact-us">Contact Us</Link>
-              <Link to="/login">Login</Link>
+              <Link to="/about">About</Link>
+              <Link to="/ordernow">Order Now</Link>
             </div>
           </div>
 
@@ -37,7 +36,6 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-gray-300">
               <a href="#">Partner With Us</a>
               <a href="#">Restaurant Dashboard</a>
-              <a href="#">Business Growth</a>
             </div>
           </div>
 
@@ -47,7 +45,7 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-gray-300">
               <a href="#">Submit Feedback</a>
               <a href="#">Help Center</a>
-              <Link to="/contact-us">Contact Us</Link>
+              <Link to="/contactus">Contact Us</Link>
             </div>
           </div>
         </div>

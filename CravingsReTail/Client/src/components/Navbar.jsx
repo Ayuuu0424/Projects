@@ -4,7 +4,7 @@ import logo from "../assets/headerLOGO.png";
 
 const Navbar = () => {
   return (
-    <nav className="bg-(--primary) shadow-md">
+    <nav className="sticky top-0 z-50 bg-(--primary) shadow-md">
       <div className="h-16 px-8 flex items-center justify-between">
         <div className="flex-1">
           <Link to="/">
@@ -16,21 +16,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="flex-1 flex justify-center gap-10">
-          <Link
-            to="/"
-            className="text-(--primary-text) font-medium hover:text-(--accent) transition"
-          >
-            Home
-          </Link>
-
-          <Link
-            to="/contactus"
-            className="text-(--primary-text) font-medium hover:text-(--accent) transition"
-          >
-            Contact Us
-          </Link>
-        </div>
+        <div className="flex-1 flex justify-center gap-10"></div>
 
         <div className="flex-1 flex justify-end gap-4">
           <Link

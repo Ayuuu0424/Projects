@@ -1,14 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loginBg from "../assets/pinkLoginBG.jpg";
+import api from "../config/api.config.js";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [registerData, setRegisterData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
     password: "",
     confirmPassword: "",
   });
+
+  const [validateError, setValidateError] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +24,30 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(registerData);
+    if (registerData.password !== registerData.confirmPassword) {
+      setValidateError("Passwords do not match");
+      return;
+    }
 
-    console.log(registerData);
+    setValidateError("");
+    console.log("Register data submitted:", registerData);
+
+    const payload = {
+      fullName: registerData.fullName,
+      email: registerData.email.toLowerCase(),
+      gender: registerData.gender,
+      password: registerData.password,
+    };
+
+    try {
+      const res = await api.post("/auth/register", payload);
+      alert(res.data.message);
+    } catch (error) {
+      console.log(res?.data?.message || error.message);
+    }
   };
 
   return (
@@ -65,7 +90,7 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="mt-6 space-y-3">
           <input
             type="text"
-            name="name"
+            name="fullName"
             value={registerData.name}
             onChange={handleChange}
             placeholder="Enter your full name"
