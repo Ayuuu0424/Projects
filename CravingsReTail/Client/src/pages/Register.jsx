@@ -9,6 +9,7 @@ const Register = () => {
     fullName: "",
     email: "",
     phone: "",
+    role: "customer",
     password: "",
     confirmPassword: "",
   });
@@ -38,7 +39,8 @@ const Register = () => {
     const payload = {
       fullName: registerData.fullName,
       email: registerData.email.toLowerCase(),
-      gender: registerData.gender,
+      phone: registerData.phone,
+      role: registerData.role,
       password: registerData.password,
     };
 
@@ -46,7 +48,10 @@ const Register = () => {
       const res = await api.post("/auth/register", payload);
       alert(res.data.message);
     } catch (error) {
-      console.log(res?.data?.message || error.message);
+      console.log(error.response?.data?.message || error.message);
+      // console.log(error);
+      // console.log(error.response);
+      // console.log(error.message);
     }
   };
 
@@ -71,17 +76,35 @@ const Register = () => {
 
           <div className="flex gap-6 mt-3">
             <label className="flex items-center gap-2">
-              <input type="radio" name="role" value="customer" defaultChecked />
+              <input
+                type="radio"
+                name="role"
+                value="customer"
+                checked={registerData.role === "customer"}
+                onChange={handleChange}
+              />
               Customer
             </label>
 
             <label className="flex items-center gap-2">
-              <input type="radio" name="role" value="restaurant" />
+              <input
+                type="radio"
+                name="role"
+                value="restaurant"
+                checked={registerData.role === "restaurant"}
+                onChange={handleChange}
+              />
               Restaurant
             </label>
 
             <label className="flex items-center gap-2">
-              <input type="radio" name="role" value="rider" />
+              <input
+                type="radio"
+                name="role"
+                value="rider"
+                checked={registerData.role === "rider"}
+                onChange={handleChange}
+              />
               Rider
             </label>
           </div>
@@ -91,7 +114,7 @@ const Register = () => {
           <input
             type="text"
             name="fullName"
-            value={registerData.name}
+            value={registerData.fullName}
             onChange={handleChange}
             placeholder="Enter your full name"
             className="w-full border border-pink-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
@@ -138,7 +161,7 @@ const Register = () => {
           </label>
 
           <button
-            type="submit"
+            onClick={() => navigate("/register")}
             className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition duration-300"
           >
             Register

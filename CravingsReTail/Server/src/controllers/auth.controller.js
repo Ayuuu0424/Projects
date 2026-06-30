@@ -3,9 +3,9 @@ import bcrypt from "bcrypt";
 
 export const RegisterUser = async (req, res, next) => {
   try {
-    const { fullName, email, password, phone, gender, dob } = req.body;
+    const { fullName, email, password, phone, role } = req.body;
 
-    if (!fullName || !email || !password || !phone || !gender || !dob) {
+    if (!fullName || !email || !password || !phone || !role) {
       const error = new Error("All fields Required");
       error.statusCode = 400;
       return next(error);
@@ -28,8 +28,7 @@ export const RegisterUser = async (req, res, next) => {
       email,
       password: hashedPassword,
       phone,
-      gender,
-      dob,
+      role,
       photo,
     });
 
