@@ -17,6 +17,8 @@ const Register = () => {
 
   const [validateError, setValidateError] = useState();
 
+  const [isChecked, setIsChecked] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,14 +30,35 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(registerData);
+
+    if (registerData.fullName.trim() === "") {
+      toast.error("Full Name is required");
+      return;
+    }
+
+    if (registerData.email.trim() === "") {
+      toast.error("Email is required");
+      return;
+    }
+
     if (registerData.password !== registerData.confirmPassword) {
-      setValidateError("Passwords do not match");
+      // setValidateError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
     setValidateError("");
     console.log("Register data submitted:", registerData);
+
+    if (!isChecked) {
+      toast.error("Please accept the Terms & Conditions");
+      return;
+    }
+
+    if (!/^[6-9]\d{9}$/.test(registerData.phone)) {
+      toast.error("Enter a valid phone number");
+      return;
+    }
 
     const payload = {
       fullName: registerData.fullName,
@@ -48,8 +71,13 @@ const Register = () => {
     try {
       const res = await api.post("/auth/register", payload);
       toast.success(res.data.message);
+      navigate("/login");
     } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
+      toast.error(
+        error.response?.status + " | " + error.response?.data?.message ||
+          error.message,
+      );
+      // toast.error(error.response?.data?.message || error.message);
     }
   };
 
@@ -155,11 +183,15 @@ const Register = () => {
           />
 
           <label className="flex items-center gap-2 text-sm text-gray-600">
-            <input type="checkbox" />I agree to the Terms & Conditions
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+            />
+            I agree to the Terms & Conditions
           </label>
 
           <button
-           onClick={() => toast.success("Registration Successful")}
             type="submit"
             className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition duration-300"
           >
@@ -168,7 +200,10 @@ const Register = () => {
 
           <p className="text-center text-gray-600">
             Already have an account?{" "}
-            <span className="text-pink-600 font-semibold cursor-pointer hover:underline">
+            <span
+              onClick={() => navigate("/login")}
+              className="text-pink-600 font-semibold cursor-pointer hover:underline"
+            >
               Login
             </span>
           </p>

@@ -18,6 +18,7 @@ import RestaurantDashboard from "./pages/RestaurantDashboard";
 import Sitemap from "./pages/Sitemap";
 import TermsOfService from "./pages/TermsOfService";
 import { Toaster } from "react-hot-toast";
+import UserDashboard from "./pages/dashboard/userDashboard";
 
 const App = () => {
   return (
@@ -43,6 +44,9 @@ const App = () => {
           />
           <Route path="/sitemap" element={<Sitemap />} />
           <Route path="/termsofservice" element={<TermsOfService />} />
+
+          {/* Dashboard Routes */}
+          <Route path="/user/dashboard" element={<UserDashboard />} />
         </Routes>
 
         <Footer />

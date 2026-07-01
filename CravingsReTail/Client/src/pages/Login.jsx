@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import loginBg from "../assets/pinkLoginBG.jpg";
+import { useNavigate } from "react-router-dom";
+import api from "../config/api.config";
 import toast from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+
+  // const [validateError, setValidateError] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,19 +25,24 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Login data submitted:", loginData);
+
     const payload = {
       email: loginData.email.toLowerCase(),
       password: loginData.password,
     };
-    console.log(payload);
+    // console.log(payload);
 
     try {
       const res = await api.post("/auth/login", payload);
       toast.success(res.data.message);
-      console.log(res.data.data.photo);
+      sessionStorage.setItem("UserData", JSON.stringify(res.data.data));
+      navigate("/user/dashboard");
     } catch (error) {
-      error.response.status + "|" + error.response?.data?.message ||
-        error.message;
+      toast.error(
+        error.response.status + " | " + error.response?.data?.message ||
+          error.message,
+      );
     }
   };
 

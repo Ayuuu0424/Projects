@@ -145,17 +145,33 @@ const About = () => {
           </p>
           <h2 className="text-3xl font-bold text-black">Meet The Team</h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           <div className="text-center">
             <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
               SR
             </div>
             <p className="font-bold text-black">Sofia Reyes</p>
             <p className="text-(--secondary) text-sm">CEO & Co-Founder</p>
+
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+              ML
+            </div>
+            <p className="font-bold text-black">Marcus Lim</p>
+            <p className="text-(--secondary) text-sm">CEO & Co-Founder</p>
+
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+              AP
+            </div>
+            <p className="font-bold text-black">Aisha</p>
+            <p className="text-(--secondary) text-sm">Head Of Operations</p>
+
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+              JO
+            </div>
+            <p className="font-bold text-black">James Owusu</p>
+            <p className="text-(--secondary) text-sm">Head Of Design</p>
           </div>
-          <div className="text-center"></div>
-          <div className="text-center"></div>
-          <div className="text-center"></div>
         </div>
       </section>
     </>
