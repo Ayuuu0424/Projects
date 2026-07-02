@@ -3,15 +3,17 @@ import loginBg from "../assets/pinkLoginBG.jpg";
 import { useNavigate } from "react-router-dom";
 import api from "../config/api.config";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const { setUser, setIsLogin, isLogin } = useAuth();
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-  // const [validateError, setValidateError] = useState();
+  const [validateError, setValidateError] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +39,8 @@ const Login = () => {
       const res = await api.post("/auth/login", payload);
       toast.success(res.data.message);
       sessionStorage.setItem("UserData", JSON.stringify(res.data.data));
+      setUser(res.data.data);
+      setIsLogin(true);
       navigate("/user/dashboard");
     } catch (error) {
       toast.error(
@@ -93,6 +97,10 @@ const Login = () => {
             />
           </div>
 
+          {validateError && (
+            <p className="text-red-500 text-sm col-span-2">{validateError}</p>
+          )}
+
           <div className="flex justify-end mt-3">
             <button
               type="button"
@@ -111,9 +119,12 @@ const Login = () => {
 
           <p className="text-center mt-5 text-gray-600">
             Don't have an account?{" "}
-            <span className="text-pink-600 font-semibold cursor-pointer hover:underline">
-              Register
-            </span>
+            <button
+              onClick={() => navigate("/register")}
+              className="text-(--primary) hover:underline font-semibold"
+            >
+              Register here
+            </button>
           </p>
         </form>
       </div>
