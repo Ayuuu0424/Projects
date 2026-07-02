@@ -45,7 +45,7 @@ const Navbar = () => {
               <Link
                 to="/user/dashboard"
                 className="font-semibold text-(--primary-text) hover:text-(--primary)"
-              >9
+              >
                 {user.fullName}
               </Link>
 

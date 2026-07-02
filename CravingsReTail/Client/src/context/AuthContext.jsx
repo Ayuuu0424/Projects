@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const AuthContext = React.createContext();
 
@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("UserData")) || "",
   );
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(!!user);
 
   useEffect(() => {
     // if (user) {
@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
     // } else {
     //   setIsLogin(false);
     // }
-
     setIsLogin(!!user);
   }, [user]);
 
