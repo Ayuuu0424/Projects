@@ -5,6 +5,7 @@ import express from "express";
 import connectDB from "./src/config/db.Connection.config.js";
 import AuthRouter from "./src/routers/auth.route.js";
 import PublicRouter from "./src/routers/contact.route.js";
+import UserRouter from "./src/routers/user.route.js";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -13,12 +14,13 @@ const app = express();
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 
 app.use(morgan("dev"));
 
 app.use("/auth", AuthRouter);
 app.use("/public", PublicRouter);
+app.use("/user", UserRouter);
 
 //Default API
 app.get("/", (req, res) => {

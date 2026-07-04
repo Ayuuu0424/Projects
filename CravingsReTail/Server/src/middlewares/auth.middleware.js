@@ -1,40 +1,41 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 
 export const AuthProtect = async (req, res, next) => {
   try {
-    const token = req.cookies.CravingsCookie;
+    console.log("Cookies:", req.cookies);
+    console.log("Token:", req.cookies.Oreo);
 
+    const token = req.cookies.Oreo;
     if (!token) {
       const error = new Error("Session Expired");
-      error.statuscode = 401;
-      next(error);
+      error.statusCode = 401;
+      return next(error);
     }
 
-    console.log("Token from Middleware", token);
+    console.log("Token From MiddleWare : ", token);
 
     const decode = await jwt.verify(token, process.env.JWT_SECRET);
-
     if (!decode) {
       const error = new Error("Session Expired");
-      error.statuscode = 401;
-      next(error);
+      error.statusCode = 401;
+      return next(error);
     }
 
-    const verifiedUser = await User.findById(decode._id);
+    console.log("Decode:", decode);
 
+    const verifiedUser = await User.findById(decode.id);
+    console.log("VerifiedUser:", verifiedUser);
     if (!verifiedUser) {
       const error = new Error("Session Expired");
-      error.statuscode = 401;
-      next(error);
+      error.statusCode = 401;
+      return next(error);
     }
 
     req.user = verifiedUser;
     next();
   } catch (error) {
     console.log(error.message);
-    const error = new Error("Unknown Error At Middleware");
-    error.statusCode = 500;
-    next(error); // Controller pe jayega DEH pe direct nhi
+    next(error);
   }
 };
