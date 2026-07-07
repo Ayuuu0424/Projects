@@ -4,75 +4,104 @@ import api from "../config/api.config";
 import toast from "react-hot-toast";
 
 const Contactus = () => {
-  const [contactData, setContactData] = useState({
-    name: "",
+  const [formData, setFormData] = useState({
+    fullName: "",
     email: "",
     phone: "",
     subject: "",
     message: "",
   });
 
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setContactData((prev) => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = (data) => {
+    const newErrors = {};
+
+    if (!data.fullName.trim()) {
+      newErrors.fullName = "Full Name is required";
+    }
+
+    if (!data.email.trim()) {
+      newErrors.email = "Email is required";
+    }
+
+    if (data.phone && !/^[6-9]\d{9}$/.test(data.phone)) {
+      newErrors.phone = "Enter a valid phone number";
+    }
+
+    if (!data.subject.trim()) {
+      newErrors.subject = "Subject is required";
+    }
+
+    if (!data.message.trim()) {
+      newErrors.message = "Message is required";
+    }
+
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (contactData.name.trim() === "") {
-      toast.error("Full Name is required");
+    const validationErrors = validateForm(formData);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+
+      Object.values(validationErrors).forEach((error) => {
+        toast.error(error);
+      });
+
       return;
     }
 
-    if (contactData.email.trim() === "") {
-      toast.error("Email is required");
-      return;
-    }
-
-    if (!/^[6-9]\d{9}$/.test(contactData.phone)) {
-      toast.error("Enter a valid phone number");
-      return;
-    }
-
-    if (contactData.subject.trim() === "") {
-      toast.error("Subject is required");
-      return;
-    }
-
-    if (contactData.message.trim() === "") {
-      toast.error("Message is required");
-      return;
-    }
-
-    const payload = {
-      fullName: contactData.name,
-      email: contactData.email.toLowerCase(),
-      phone: contactData.phone,
-      subject: contactData.subject,
-      message: contactData.message,
-    };
+    setLoading(true);
 
     try {
+      const payload = {
+        ...formData,
+        email: formData.email.toLowerCase(),
+      };
+
       const res = await api.post("/public/contact-us", payload);
 
       toast.success(res.data.message);
+
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+
+      setErrors({});
     } catch (error) {
-      console.log(error.message);
-      next(error);
       toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div
       className="h-[90vh] flex items-center bg-cover bg-center pl-20"
       style={{
-        backgroundImage: `url(${contactBg})`,
+        backgroundImage: "url('/contactBG.jpg')",
       }}
     >
       <div className="w-125 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
@@ -87,54 +116,70 @@ const Contactus = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            name="name"
+            name="fullName"
             placeholder="Enter your full name"
-            value={contactData.name}
+            value={formData.name}
             onChange={handleChange}
             className="w-full p-3 border border-(--accent) rounded-xl focus:outline-none focus:ring-2 focus:ring-(--primary)"
           />
+          {errors.fullName && (
+            <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+          )}
 
           <input
             type="email"
             name="email"
             placeholder="Enter your email"
-            value={contactData.email}
+            value={formData.email}
             onChange={handleChange}
             className="w-full p-3 border border-(--accent) rounded-xl focus:outline-none focus:ring-2 focus:ring-(--primary)"
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
 
           <input
             type="tel"
             name="phone"
             placeholder="Enter your phone number"
-            value={contactData.phone}
+            value={formData.phone}
             onChange={handleChange}
             className="w-full p-3 border border-(--accent) rounded-xl focus:outline-none focus:ring-2 focus:ring-(--primary)"
           />
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+          )}
 
           <input
             type="text"
             name="subject"
             placeholder="What is this about?"
-            value={contactData.subject}
+            value={formData.subject}
             onChange={handleChange}
             className="w-full p-3 border border-(--accent) rounded-xl focus:outline-none focus:ring-2 focus:ring-(--primary)"
           />
+          {errors.subject && (
+            <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
+          )}
 
           <textarea
             rows="5"
             name="message"
             placeholder="Write your message here..."
-            value={contactData.message}
+            value={formData.message}
             onChange={handleChange}
             className="w-full p-3 border border-(--accent) rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-(--primary)"
           />
+          {errors.message && (
+            <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+          )}
 
           <button
             type="submit"
-            className="w-full py-3 bg-(--primary) text-white font-semibold rounded-xl hover:bg-(--secondary) transition duration-300"
+            disabled={loading}
+            className="w-full py-3 bg-(--primary) text-white font-semibold rounded-xl hover:bg-(--secondary) transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Send Message
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>

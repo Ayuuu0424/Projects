@@ -1,37 +1,71 @@
 import React, { useState } from "react";
 import loginBg from "../assets/pinkLoginBG.jpg";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import api from "../config/api.config";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { setUser, setIsLogin, isLogin } = useAuth();
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({
+
+  const [validateError, setValidateError] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.email.trim()) {
+      errors.email = "Email is required";
+    }
+
+    if (!formData.password.trim()) {
+      errors.password = "Password is required";
+    }
+
+    return errors;
+  };
+
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
+    rememberMe: false,
   });
-
-  const [validateError, setValidateError] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setLoginData((prevData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+
+    setValidateError((prev) => ({
+      ...prev,
+      [name]: "",
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Login data submitted:", loginData);
+    const errors = validateForm();
+
+    if (Object.keys(errors).length > 0) {
+      setValidateError(errors);
+      return;
+    }
+
+    setLoading(true);
+
+    //console.log("Login data submitted:", loginData);
 
     const payload = {
-      email: loginData.email.toLowerCase(),
-      password: loginData.password,
+      email: formData.email.toLowerCase(),
+      password: formData.password,
     };
     // console.log(payload);
 
@@ -43,10 +77,9 @@ const Login = () => {
       setIsLogin(true);
       navigate("/user/dashboard");
     } catch (error) {
-      toast.error(
-        error.response.status + " | " + error.response?.data?.message ||
-          error.message,
-      );
+      toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,11 +107,16 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
-              value={loginData.email}
+              value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
-              className="border border-pink-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
+              className={`border p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                validateError.email ? "border-red-500" : "border-pink-300"
+              }`}
             />
+            {validateError.email && (
+              <p className="text-red-500 text-sm mt-1">{validateError.email}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-2 mt-5">
@@ -86,45 +124,54 @@ const Login = () => {
               Password
             </label>
 
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={loginData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              className="border border-pink-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                className="w-full border border-pink-300 p-3 rounded-xl pr-10 focus:outline-none focus:ring-2 focus:ring-pink-400"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-pink-500"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+
+            {validateError.password && (
+              <p className="text-red-500 text-sm">{validateError.password}</p>
+            )}
           </div>
 
-          {validateError && (
-            <p className="text-red-500 text-sm col-span-2">{validateError}</p>
-          )}
-
-          <div className="flex justify-end mt-3">
-            <button
-              type="button"
-              className="text-sm text-pink-600 hover:underline"
-            >
-              Forgot Password?
-            </button>
-          </div>
+          <Link
+            to="/forgot-password"
+            className="text-sm text-pink-600 hover:underline"
+          >
+            Forgot Password?
+          </Link>
 
           <button
             type="submit"
-            className="w-full mt-5 bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition duration-300"
+            disabled={loading}
+            className="w-full mt-5 bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition disabled:opacity-50"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <p className="text-center mt-5 text-gray-600">
             Don't have an account?{" "}
-            <button
-              onClick={() => navigate("/register")}
+            <Link
+              to="/register"
               className="text-(--primary) hover:underline font-semibold"
             >
               Register here
-            </button>
+            </Link>
           </p>
         </form>
       </div>

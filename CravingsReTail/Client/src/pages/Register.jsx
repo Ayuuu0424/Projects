@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import loginBg from "../assets/pinkLoginBG.jpg";
 import api from "../config/api.config.js";
 import toast from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [registerData, setRegisterData] = useState({
+  const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phone: "",
@@ -15,57 +16,69 @@ const Register = () => {
     confirmPassword: "",
   });
 
-  const [validateError, setValidateError] = useState();
-
+  const [validateError, setValidateError] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.fullName.trim()) errors.fullName = "Full Name is required";
+
+    if (!formData.email.trim()) errors.email = "Email is required";
+
+    if (!/^[6-9]\d{9}$/.test(formData.phone))
+      errors.phone = "Enter a valid phone number";
+
+    if (!formData.password) errors.password = "Password is required";
+    if (!formData.confirmPassword)
+      errors.confirmPassword = "Confirm Password is required";
+
+    if (formData.password !== formData.confirmPassword)
+      errors.confirmPassword = "Passwords do not match";
+
+    if (!isChecked) errors.terms = "Please accept the Terms & Conditions";
+
+    return errors;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setRegisterData((prevData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+
+    setValidateError((prev) => ({
+      ...prev,
+      [name]: "",
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (registerData.fullName.trim() === "") {
-      toast.error("Full Name is required");
+    const errors = validateForm();
+
+    if (Object.keys(errors).length > 0) {
+      setValidateError(errors);
       return;
     }
 
-    if (registerData.email.trim() === "") {
-      toast.error("Email is required");
-      return;
-    }
-
-    if (registerData.password !== registerData.confirmPassword) {
-      // setValidateError("Passwords do not match");
-      toast.error("Passwords do not match");
-      return;
-    }
+    setLoading(true);
 
     setValidateError("");
-    console.log("Register data submitted:", registerData);
-
-    if (!isChecked) {
-      toast.error("Please accept the Terms & Conditions");
-      return;
-    }
-
-    if (!/^[6-9]\d{9}$/.test(registerData.phone)) {
-      toast.error("Enter a valid phone number");
-      return;
-    }
+    console.log("Register data submitted:", formData);
 
     const payload = {
-      fullName: registerData.fullName,
-      email: registerData.email.toLowerCase(),
-      phone: registerData.phone,
-      role: registerData.role,
-      password: registerData.password,
+      fullName: formData.fullName,
+      email: formData.email.toLowerCase(),
+      phone: formData.phone,
+      role: formData.role,
+      password: formData.password,
     };
 
     try {
@@ -78,6 +91,8 @@ const Register = () => {
           error.message,
       );
       // toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,7 +121,7 @@ const Register = () => {
                 type="radio"
                 name="role"
                 value="customer"
-                checked={registerData.role === "customer"}
+                checked={formData.role === "customer"}
                 onChange={handleChange}
               />
               Customer
@@ -117,7 +132,7 @@ const Register = () => {
                 type="radio"
                 name="role"
                 value="restaurant"
-                checked={registerData.role === "restaurant"}
+                checked={formData.role === "restaurant"}
                 onChange={handleChange}
               />
               Restaurant
@@ -128,7 +143,7 @@ const Register = () => {
                 type="radio"
                 name="role"
                 value="rider"
-                checked={registerData.role === "rider"}
+                checked={formData.role === "rider"}
                 onChange={handleChange}
               />
               Rider
@@ -140,47 +155,105 @@ const Register = () => {
           <input
             type="text"
             name="fullName"
-            value={registerData.fullName}
+            value={formData.fullName}
             onChange={handleChange}
             placeholder="Enter your full name"
-            className="w-full border border-pink-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className={`w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+              validateError.fullName ? "border-red-500" : "border-pink-300"
+            }`}
           />
+
+          {validateError.fullName && (
+            <p className="text-red-500 text-sm mt-1">
+              {validateError.fullName}
+            </p>
+          )}
 
           <input
             type="email"
             name="email"
-            value={registerData.email}
+            value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
-            className="w-full border border-pink-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className={`w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+              validateError.email ? "border-red-500" : "border-pink-300"
+            }`}
           />
+
+          {validateError.email && (
+            <p className="text-red-500 text-sm mt-1">{validateError.email}</p>
+          )}
 
           <input
             type="tel"
             name="phone"
-            value={registerData.phone}
+            value={formData.phone}
             onChange={handleChange}
             placeholder="Enter your phone number"
-            className="w-full border border-pink-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className={`w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+              validateError.phone ? "border-red-500" : "border-pink-300"
+            }`}
           />
 
-          <input
-            type="password"
-            name="password"
-            value={registerData.password}
-            onChange={handleChange}
-            placeholder="Create password"
-            className="w-full border border-pink-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
+          {validateError.phone && (
+            <p className="text-red-500 text-sm mt-1">{validateError.phone}</p>
+          )}
 
-          <input
-            type="password"
-            name="confirmPassword"
-            value={registerData.confirmPassword}
-            onChange={handleChange}
-            placeholder="Confirm password"
-            className="w-full border border-pink-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create password"
+              className={`w-full border p-2.5 rounded-xl pr-10 focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                validateError.password ? "border-red-500" : "border-pink-300"
+              }`}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-pink-500"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
+          {validateError.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {validateError.password}
+            </p>
+          )}
+
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm password"
+              className={`w-full border p-2.5 rounded-xl pr-10 focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                validateError.confirmPassword
+                  ? "border-red-500"
+                  : "border-pink-300"
+              }`}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-pink-500"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
+          {validateError.confirmPassword && (
+            <p className="text-red-500 text-sm mt-1">
+              {validateError.confirmPassword}
+            </p>
+          )}
 
           <label className="flex items-center gap-2 text-sm text-gray-600">
             <input
@@ -190,6 +263,10 @@ const Register = () => {
             />
             I agree to the Terms & Conditions
           </label>
+
+          {validateError.terms && (
+            <p className="text-red-500 text-sm">{validateError.terms}</p>
+          )}
 
           <button
             type="submit"

@@ -138,7 +138,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="bg-[#f3ede5] mx-auto py-16 px-6">
+      <section className="bg-[#f3ede5] mx-w-5xl mx-auto py-16 px-6">
         <div className="text-center mb-10">
           <p className="text-(--primary) font-semibold uppercase text-sm tracking-widest mb-2">
             The People Behind Cravings
@@ -148,25 +148,31 @@ const About = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           <div className="text-center">
-            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-1 shadow-md">
               SR
             </div>
             <p className="font-bold text-black">Sofia Reyes</p>
             <p className="text-(--secondary) text-sm">CEO & Co-Founder</p>
+          </div>
 
-            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+          <div className="text-center">
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-1 shadow-md">
               ML
             </div>
             <p className="font-bold text-black">Marcus Lim</p>
             <p className="text-(--secondary) text-sm">CEO & Co-Founder</p>
+          </div>
 
-            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+          <div className="text-center">
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-1 shadow-md">
               AP
             </div>
             <p className="font-bold text-black">Aisha</p>
             <p className="text-(--secondary) text-sm">Head Of Operations</p>
+          </div>
 
-            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+          <div className="text-center">
+            <div className="w-20 h-20 mx-auto rounded-full bg-(--primary) flex items-center justify-center text-white text-xl font-bold mb-1 shadow-md">
               JO
             </div>
             <p className="font-bold text-black">James Owusu</p>

@@ -1,13 +1,40 @@
 @import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --primary: #fb2671;
-  --primary-text: black;
+  --primary-content: #ffffff;
   --secondary: #ff4081;
+  --secondary-content: #f8e3e3;
   --accent: #ffb6c1;
   --success: #22c55e;
   --error: #ef4444;
   --warning: #f59e0b;
   --background: #fff5f8;
   --text: #2d2d2d;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Remove number input spinner buttons */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Remove password input eye icon */
+input[type="password"]::-ms-reveal {
+  display: none;
 }
