@@ -14,11 +14,14 @@ import OrderNow from "./pages/OrderNow";
 import Partner from "./pages/Partner";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Register from "./pages/Register";
-import RestaurantDashboard from "./pages/RestaurantDashboard";
 import Sitemap from "./pages/Sitemap";
 import TermsOfService from "./pages/TermsOfService";
 import { Toaster } from "react-hot-toast";
 import CustomerDashboard from "./pages/dashboard/CustomerDashboard";
+import RestaurantDashboard from "./pages/dashboard/RestaurantDashboard";
+import RiderDashboard from "./pages/dashboard/RiderDashboard";
+import AdminDashboard from "./pages/dashboard/AdminDashboard";
+
 const App = () => {
   return (
     <>
@@ -44,7 +47,13 @@ const App = () => {
           <Route path="/sitemap" element={<Sitemap />} />
           <Route path="/termsofservice" element={<TermsOfService />} />
           {/* Dashboard Routes */}
-          <Route path="/user/dashboard" element={<CustomerDashboard />} />{" "}
+          <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+          <Route
+            path="/restaurant-dashboard"
+            element={<RestaurantDashboard />}
+          />
+          <Route path="/rider-dashboard" element={<RiderDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
 
         <Footer />

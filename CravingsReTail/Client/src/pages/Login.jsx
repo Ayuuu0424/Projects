@@ -8,26 +8,8 @@ import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const { setUser, setIsLogin, isLogin } = useAuth();
+  const { setUser, setIsLogin, setRole } = useAuth();
   const navigate = useNavigate();
-
-  const [validateError, setValidateError] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const validateForm = () => {
-    const errors = {};
-
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    }
-
-    if (!formData.password.trim()) {
-      errors.password = "Password is required";
-    }
-
-    return errors;
-  };
 
   const [formData, setFormData] = useState({
     email: "",
@@ -35,49 +17,75 @@ const Login = () => {
     rememberMe: false,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
     }));
 
-    setValidateError((prev) => ({
+    setErrors((prev) => ({
       ...prev,
       [name]: "",
     }));
   };
 
+  const validateForm = (data) => {
+    const newErrors = {};
+
+    if (!data.email.trim()) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!data.password) {
+      newErrors.password = "Password is required";
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validateForm(formData);
 
-    const errors = validateForm();
-
-    if (Object.keys(errors).length > 0) {
-      setValidateError(errors);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     setLoading(true);
-
-    //console.log("Login data submitted:", loginData);
-
-    const payload = {
-      email: formData.email.toLowerCase(),
-      password: formData.password,
-    };
-    // console.log(payload);
+    console.log("Login data submitted:", formData);
 
     try {
-      const res = await api.post("/auth/login", payload);
+      const res = await api.post("/auth/login", {
+        email: formData.email.toLowerCase(),
+        password: formData.password,
+      });
       toast.success(res.data.message);
-      sessionStorage.setItem("UserData", JSON.stringify(res.data.data));
+      sessionStorage.setItem("cravingUser", JSON.stringify(res.data.data));
       setUser(res.data.data);
       setIsLogin(true);
-      navigate("/user/dashboard");
+      //console.log(res.data.data.userType);
+      setRole(res.data.data.userType);
+
+      res.data.data.userType === "restaurant" &&
+        navigate("/restaurant-dashboard");
+
+      res.data.data.userType === "rider" && navigate("/rider-dashboard");
+
+      res.data.data.userType === "admin" && navigate("/admin-dashboard");
+
+      res.data.data.userType === "customer" && navigate("/customer-dashboard");
     } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
+      toast.error(
+        error.response?.data?.message ||
+          "Unknown error occurred during registration. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -108,14 +116,14 @@ const Login = () => {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="Enter your email"
               className={`border p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 ${
-                validateError.email ? "border-red-500" : "border-pink-300"
+                errors.email ? "border-red-500" : "border-pink-300"
               }`}
             />
-            {validateError.email && (
-              <p className="text-red-500 text-sm mt-1">{validateError.email}</p>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
             )}
           </div>
 
@@ -130,9 +138,11 @@ const Login = () => {
                 id="password"
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 placeholder="Enter your password"
-                className="w-full border border-pink-300 p-3 rounded-xl pr-10 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                className={`w-full border p-3 rounded-xl pr-10 focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                  errors.password ? "border-red-500" : "border-pink-300"
+                }`}
               />
 
               <button
@@ -144,17 +154,37 @@ const Login = () => {
               </button>
             </div>
 
-            {validateError.password && (
-              <p className="text-red-500 text-sm">{validateError.password}</p>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
             )}
           </div>
 
-          <Link
+          {/* <Link
             to="/forgot-password"
             className="text-sm text-pink-600 hover:underline"
           >
             Forgot Password?
-          </Link>
+          </Link> */}
+
+          <div className="flex items-center justify-between mt-5">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                name="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleInputChange}
+                className="cursor-pointer"
+              />
+              <span className="text-sm text-gray-600">Remember Me</span>
+            </label>
+
+            <Link
+              to="/forgot-password"
+              className="text-sm text-pink-600 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
           <button
             type="submit"

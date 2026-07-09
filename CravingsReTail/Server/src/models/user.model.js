@@ -18,12 +18,6 @@ const UserSchema = mongoose.Schema(
       required: true,
     },
 
-    role: {
-      type: String,
-      required: true,
-      enum: ["customer", "restaurant", "rider"],
-    },
-
     password: {
       type: String,
       required: true,
@@ -37,6 +31,12 @@ const UserSchema = mongoose.Schema(
       publicId: {
         type: String,
       },
+    },
+    userType: {
+      type: String,
+      enum: ["admin", "customer", "rider", "restaurant"],
+      required: true,
+      default: "customer",
     },
   },
   {

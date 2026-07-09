@@ -11,7 +11,7 @@ const Register = () => {
     fullName: "",
     email: "",
     phone: "",
-    role: "customer",
+    userType: "customer",
     password: "",
     confirmPassword: "",
   });
@@ -77,7 +77,7 @@ const Register = () => {
       fullName: formData.fullName,
       email: formData.email.toLowerCase(),
       phone: formData.phone,
-      role: formData.role,
+      userType: formData.userType,
       password: formData.password,
     };
 
@@ -119,9 +119,9 @@ const Register = () => {
             <label className="flex items-center gap-2">
               <input
                 type="radio"
-                name="role"
+                name="userType"
                 value="customer"
-                checked={formData.role === "customer"}
+                checked={formData.userType === "customer"}
                 onChange={handleChange}
               />
               Customer
@@ -130,9 +130,9 @@ const Register = () => {
             <label className="flex items-center gap-2">
               <input
                 type="radio"
-                name="role"
+                name="userType"
                 value="restaurant"
-                checked={formData.role === "restaurant"}
+                checked={formData.userType === "restaurant"}
                 onChange={handleChange}
               />
               Restaurant
@@ -141,9 +141,9 @@ const Register = () => {
             <label className="flex items-center gap-2">
               <input
                 type="radio"
-                name="role"
+                name="userType"
                 value="rider"
-                checked={formData.role === "rider"}
+                checked={formData.userType === "rider"}
                 onChange={handleChange}
               />
               Rider

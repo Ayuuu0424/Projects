@@ -7,22 +7,37 @@ import api from "../config/api.config.js";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const { user, setUser, isLogin, setIsLogin } = useAuth();
-
+  const { user, isLogin, role, setUser, setIsLogin, setRole } = useAuth();
   const navigate = useNavigate();
+
+  // console.log(user);
+  // console.log(role);
+
+  const handleNavigate = () => {
+    if (role === "restaurant") {
+      navigate("/restaurant-dashboard");
+    } else if (role === "rider") {
+      navigate("/rider-dashboard");
+    } else if (role === "admin") {
+      navigate("/admin-dashboard");
+    } else {
+      navigate("/customer-dashboard");
+    }
+  };
 
   const handleLogout = async () => {
     try {
-      const res = await api.get("/auth/logout");
-      sessionStorage.removeItem("UserData");
-      setIsLogin(false);
-      setUser(false);
-      navigate("/");
       toast.success(res.data.message);
+
+      sessionStorage.removeItem("UserData");
+      setUser(null);
+      setIsLogin(false);
+      setRole(null);
+      navigate("/");
     } catch (error) {
       toast.error(
-        error.response.status + " | " + error.response?.data?.message ||
-          error.message,
+        error.response?.data?.message ||
+          "Unknown error occurred during registration. Please try again.",
       );
     }
   };
@@ -45,20 +60,29 @@ const Navbar = () => {
         <div className="flex-1 flex justify-end items-center gap-4">
           {isLogin ? (
             <div className="flex items-center gap-4 border-l-2 pl-4">
-              <div className="w-10 h-10 rounded-full overflow-hidden border border-(--accent)">
+              <button
+                onClick={handleNavigate}
+                className="w-10 h-10 rounded-full overflow-hidden border border-(--accent)"
+              >
                 <img
-                  src={user?.photo}
+                  src={user?.photo.url}
                   alt={user?.fullName}
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </button>
 
-              <Link
-                to="/user/dashboard"
-                className="font-semibold text-(--primary-text) hover:text-(--primary)"
+              <div
+                onClick={handleNavigate}
+                className="cursor-pointer flex flex-col"
               >
-                {user.fullName}
-              </Link>
+                <span className="font-semibold text-(--primary-text)">
+                  {user?.fullName}
+                </span>
+
+                <span className="text-xs text-white/80 capitalize">
+                  {user?.role}
+                </span>
+              </div>
 
               <button
                 onClick={handleLogout}
