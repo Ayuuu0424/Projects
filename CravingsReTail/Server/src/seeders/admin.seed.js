@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const AdminUser = {
   fullName: "Admin",
-  email: "admin@cravings678.com",
+  email: "admin@cravingsretail.com",
   password: await bcrypt.hash("StrongPassword@123", 10),
   userType: "admin",
   phone: "9876543210",

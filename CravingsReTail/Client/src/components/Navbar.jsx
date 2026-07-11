@@ -27,18 +27,19 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+      const res = await api.get("/auth/logout");
+
       toast.success(res.data.message);
 
-      sessionStorage.removeItem("UserData");
+      sessionStorage.removeItem("cravingUser");
+
       setUser(null);
       setIsLogin(false);
       setRole(null);
+
       navigate("/");
     } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "Unknown error occurred during registration. Please try again.",
-      );
+      toast.error(error.response?.data?.message || "Logout failed.");
     }
   };
 
