@@ -11,11 +11,11 @@ const UserData = [
     photo: { url: "https://placehold.co/600x400?text=M", publicId: null },
   },
   {
-    fullName: "Customer1",
-    email: "customer1@gmail.com",
-    password: await bcrypt.hash("Customer@123", 10),
+    fullName: "Ayushi",
+    email: "ayushi65665@gmail.com",
+    password: await bcrypt.hash("@Ayuuu3448", 10),
     userType: "customer",
-    phone: "9876543210",
+    phone: "9302429877",
     photo: { url: "https://placehold.co/600x400?text=C", publicId: null },
   },
   {
