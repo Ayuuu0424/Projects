@@ -8,8 +8,8 @@ import { useAuth } from "../context/AuthContext";
 import ForgotPasswordModal from "../components/commonModals/ForgotPasswordModal";
 
 const Login = () => {
-  const { setUser, setIsLogin, setRole } = useAuth();
   const navigate = useNavigate();
+  const { setUser, setIsLogin, setRole } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
