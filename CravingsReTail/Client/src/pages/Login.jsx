@@ -184,7 +184,7 @@ const Login = () => {
               <div
                 type="button"
                 onClick={() => setIsForgotPasswordModalOpen(true)}
-                className="text-sm text-(--color-primary) hover:underline transition-colors"
+                className="text-sm text-(--primary) hover:underline transition-colors"
               >
                 Forgot Password?
               </div>

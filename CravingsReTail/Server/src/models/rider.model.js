@@ -9,28 +9,28 @@ const RiderSchema = mongoose.Schema(
     },
     vehicleDetails: {
       type: {
-        vehicleType: { type: String, required: true },
-        vehicleNumber: { type: String, required: true },
-        vehicleModel: { type: String, required: true },
-        vehicleColor: { type: String, required: true },
+        vehicleType: { type: String },
+        vehicleNumber: { type: String },
+        vehicleModel: { type: String },
+        vehicleColor: { type: String },
       },
     },
     documents: {
       type: {
-        drivingLicense: { type: String, required: true },
-        vehicleRegistrationCertificate: { type: String, required: true },
-        insuranceCertificate: { type: String, required: true },
-        aadharCard: { type: String, required: true },
-        panCard: { type: String, required: true },
+        drivingLicense: { type: String},
+        vehicleRegistrationCertificate: { type: String},
+        insuranceCertificate: { type: String},
+        aadharCard: { type: String},
+        panCard: { type: String},
       },
     },
     currentAddress: {
       type: {
-        address: { type: String, required: true },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        pinCode: { type: String, required: true },
-        country: { type: String, required: true },
+        address: { type: String},
+        city: { type: String},
+        state: { type: String},
+        pinCode: { type: String},
+        country: { type: String},
       },
     },
     status: {
@@ -42,16 +42,26 @@ const RiderSchema = mongoose.Schema(
     isAvailable: { type: Boolean, default: false },
     financialDetails: {
       type: {
-        bankName: { type: String, required: true },
-        accountNumber: { type: String, required: true },
-        ifscCode: { type: String, required: true },
+        bankName: { type: String},
+        accountNumber: { type: String},
+        ifscCode: { type: String},
       },
     },
     currentLocation: {
       type: {
-        lat: { type: String },
-        lon: { type: String },
+        lat: { type: Number },
+        lon: { type: Number },
       },
+    },
+
+    totalDeliveries: {
+      type: Number,
+      default: 0,
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true },

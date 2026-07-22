@@ -4,6 +4,7 @@ import { genToken } from "../utils/auth.service.js";
 import OTP from "../models/otp.model.js";
 import { genOTPToken } from "../utils/auth.service.js";
 import { sendOTPEmail } from "../utils/email.service.js";
+import Rider from "../models/rider.model.js";
 
 export const RegisterUser = async (req, res, next) => {
   try {
@@ -40,6 +41,12 @@ export const RegisterUser = async (req, res, next) => {
       photo,
       userType,
     });
+
+    if (userType === "rider") {
+      await Rider.create({
+        riderId: newUser._id,
+      });
+    }
 
     res.status(201).json({ message: "User Created Successfully" });
   } catch (error) {

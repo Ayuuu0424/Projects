@@ -7,8 +7,8 @@
 :root {
   --primary: #fb2671;
   --primary-content: #ffffff;
-  --secondary: #ff4081;
-  --secondary-content: #f8e3e3;
+  --text: #ff4081;
+  --text-content: #f8e3e3;
   --accent: #ffb6c1;
   --success: #22c55e;
   --error: #ef4444;

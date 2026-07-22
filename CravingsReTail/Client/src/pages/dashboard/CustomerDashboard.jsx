@@ -10,7 +10,8 @@ const CustomerDashboard = () => {
   const { isLogin, role } = useAuth();
   const navigate = useNavigate();
   const active = useLocation().state?.activeTab;
-  const [activeTab, setActiveTab] = React.useState(active || "overview");
+  // const [activeTab, setActiveTab] = React.useState(active || "overview");
+  const [activeTab, setActiveTab] = React.useState("settings");
 
   if (!isLogin || role !== "customer") {
     return (

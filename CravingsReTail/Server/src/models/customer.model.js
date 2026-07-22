@@ -12,6 +12,11 @@ const CustomerSchema = mongoose.Schema(
         {
           name: { type: String, required: true },
           address: { type: String, required: true },
+          landmark: {
+            type: String,
+            default: "",
+          },
+
           city: { type: String, required: true },
           state: { type: String, required: true },
           pinCode: { type: String, required: true },
@@ -35,6 +40,30 @@ const CustomerSchema = mongoose.Schema(
         },
       ],
     },
+
+    preferences: {
+      favouriteCuisine: {
+        type: String,
+        default: "",
+      },
+      preferredPayment: {
+        type: String,
+        default: "Cash",
+      },
+      foodPreference: {
+        type: String,
+        default: "Veg",
+      },
+      emailNotifications: {
+        type: Boolean,
+        default: true,
+      },
+      smsNotifications: {
+        type: Boolean,
+        default: false,
+      },
+    },
+
     isActive: {
       type: Boolean,
       default: true,
